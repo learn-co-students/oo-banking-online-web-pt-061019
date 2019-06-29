@@ -21,10 +21,9 @@ class Transfer
       @status = "complete"
     end
     if !@sender.valid?
+      @status = "rejected"
       "Transaction rejected. Please check your account balance."
     end
-    sender.status = "rejected"   if !@sender.valid?
-    # binding.pry
   end
 
   def reverse_transfer
