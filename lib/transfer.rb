@@ -6,19 +6,32 @@ class Transfer
     @sender = sender
     @receiver = receiver
     @status = "pending"
-    @amount = 50
+    @amount = amount
   end
 
   def valid?
     @receiver.valid?
     @sender.valid?
-    #  binding.pry
   end
 
   def execute_transaction
-    sender.balance -= amount
-    receiver.balance += amount
-    @status = "complete"
+    if @status == "pending" && valid?
+      sender.balance -= amount
+      receiver.balance += amount
+      @status = "complete"
+    end
+    if !@sender.valid?
+      "Transaction rejected. Please check your account balance."
+    end
+    sender.status = "rejected"   if !@sender.valid?
     # binding.pry
+  end
+
+  def reverse_transfer
+    if @status == "complete" && valid?
+      sender.balance += amount
+      receiver.balance -= amount
+      @status = "reversed"
+    end
   end
 end
