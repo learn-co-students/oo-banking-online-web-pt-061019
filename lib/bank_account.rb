@@ -10,8 +10,22 @@ class BankAccount
   end
 # binding.pry
   def deposit(money)
-    balance = @balance += 1
-    money = @deposit
-    balance << money
+    @balance = @balance + money
+  end
+
+  def display_balance
+      "Your balance is $#{@balance}."
+  end
+
+  def valid?
+    if @status == "open" && @balance > 0
+      true
+    else
+      false
+    end
+  end
+
+  def close_account
+    
   end
 end
